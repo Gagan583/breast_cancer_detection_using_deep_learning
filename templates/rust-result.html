@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f9fafb;
+            font-family: 'Arial', sans-serif;
+        }
+        .result-container {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .main-prediction {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        .btn-success {
+            background-color: #10b981;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        .btn-success:hover {
+            background-color: #059669;
+        }
+        .result-img {
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        .footer {
+            background: #1f2937;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="flex items-center p-4 bg-white shadow-sm">
+        <div class="flex items-center">
+            <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center mr-2">
+                <span class="text-white text-xl">❤️</span>
+            </div>
+            <div>
+                <h1 class="text-pink-500 font-bold text-lg">Breast Cancer AI</h1>
+                <span class="text-gray-600 text-sm">Early Detection System</span>
+            </div>
+        </div>
+        <nav class="ml-auto">
+            <a href="index.html" class="text-gray-700 hover:text-blue-500 mx-4">Home</a>
+            <a href="{{ url_for('disease_prediction') }}" class="text-gray-700 hover:text-blue-500 mx-4">Detection</a>
+            <a href="#" class="text-gray-700 hover:text-blue-500 mx-4">About</a>
+            <a href="login.html" class="text-gray-700 hover:text-blue-500 mx-4">Login</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <div class="result-container text-center">
+            <!-- Main Prediction Card -->
+            <div class="mb-8">
+                <h3 class="main-prediction bg-yellow-100 py-4 rounded-lg">{{ prediction }}</h3>
+            </div>
+
+            <!-- Disease Details -->
+            {% if prediction %}
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                <h4 class="text-blue-500 text-2xl font-semibold mb-4">Disease Details</h4>
+                <ul class="text-gray-600 text-left">
+                    <li class="mb-2"><strong>Disease:</strong> {{ prediction }}</li>
+                    <li class="mb-2"><strong>Cause:</strong> {{ cause }}</li>
+                    <li class="mb-2"><strong>Treatment:</strong> {{ treatment }}</li>
+                    <li class="mb-2"><strong>Accuracy/Confidence Score:</strong> {{ accuracy }}</li>
+                    <li class="mb-2"><strong>Treatment Cost in India:</strong> {{ treatment_cost.India }}</li>
+                    <li class="mb-2"><strong>Treatment Cost in USA:</strong> {{ treatment_cost.USA }}</li>
+                    <li class="mb-2"><strong>Best Hospitals in India:</strong> {{ best_hospitals.India }}</li>
+                    <li class="mb-2"><strong>Best Hospitals in USA:</strong> {{ best_hospitals.USA }}</li>
+                    <li class="mb-2"><strong>Global Data:</strong> {{ global_data }}</li>
+                    <li class="mb-2"><strong>Ayurveda:</strong> {{ alternative_treatments.Ayurveda }}</li>
+                    <li class="mb-2"><strong>Homeopathy:</strong> {{ alternative_treatments.Homeopathy }}</li>
+                    <li class="mb-2"><strong>Allopathy:</strong> {{ alternative_treatments.Allopathy }}</li>
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- PDF Download -->
+            <form action="{{ url_for('download_pdf') }}" method="POST" class="mb-8">
+                <input type="hidden" name="prediction" value="{{ prediction }}">
+                <input type="hidden" name="cause" value="{{ cause }}">
+                <input type="hidden" name="treatment" value="{{ treatment }}">
+                <input type="hidden" name="accuracy" value="{{ accuracy }}">
+                <input type="hidden" name="treatment_cost_india" value="{{ treatment_cost.India }}">
+                <input type="hidden" name="treatment_cost_usa" value="{{ treatment_cost.USA }}">
+                <input type="hidden" name="best_hospital_india" value="{{ best_hospitals.India }}">
+                <input type="hidden" name="best_hospital_usa" value="{{ best_hospitals.USA }}">
+                <input type="hidden" name="global_data" value="{{ global_data }}">
+                <input type="hidden" name="ayurveda" value="{{ alternative_treatments.Ayurveda }}">
+                <input type="hidden" name="homeopathy" value="{{ alternative_treatments.Homeopathy }}">
+                <input type="hidden" name="allopathy" value="{{ alternative_treatments.Allopathy }}">
+                <button type="submit" class="btn-success px-6 py-3 rounded-lg font-bold">Download Report as PDF</button>
+            </form>
+
+            <!-- Output Images -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <img src="{{ url_for('static', filename='output_image.png') }}" alt="Output Image" class="result-img w-full">
+                <img src="{{ url_for('static', filename='grad_result.png') }}" alt="Output Gradcam Image" class="result-img w-full">
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Breast Cancer AI. All rights reserved.</p>
+    </footer>
+</body>
+</html>

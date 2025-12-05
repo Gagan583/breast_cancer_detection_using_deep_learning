@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffffff, #e0f2fe);
+            font-family: 'Arial', sans-serif;
+        }
+        .btn-blue {
+            background-color: #3b82f6;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+        .btn-blue:hover {
+            background-color: #2563eb;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex justify-between items-center p-6 max-w-7xl mx-auto w-full">
+        <div class="flex items-center space-x-2">
+            <div class="w-10 h-10 bg-pink-200 rounded-full flex items-center justify-center">
+                <span class="text-pink-600 font-bold">♥</span>
+            </div>
+            <h1 class="text-xl font-semibold text-gray-800">Breast Cancer AI</h1>
+            <span class="text-sm text-gray-500">Early Detection System</span>
+        </div>
+        <nav class="space-x-6">
+            <a href="#" class="text-gray-600 hover:text-gray-900">Home</a>
+            <a href="{{ url_for('disease_prediction') }}" class="text-gray-600 hover:text-gray-900">Detection</a>
+            <a href="#" class="text-gray-600 hover:text-gray-900">About</a>
+            <a href="login.html" class="text-gray-600 hover:text-gray-900">Login</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto p-6 space-y-6 md:space-y-0 md:space-x-12">
+        <!-- Text Section -->
+        <div class="max-w-md">
+            <h2 class="text-4xl font-bold text-gray-900">Early Detection</h2>
+            <h3 class="text-2xl font-semibold text-pink-600 mt-2">Saves Lives</h3>
+            <p class="text-gray-600 mt-4">Advanced AI-powered breast cancer detection system providing accurate, fast, and reliable analysis to support early intervention and better outcomes.</p>
+            <div class="mt-6 space-x-4">
+                <a href="{{ url_for('disease_prediction') }}" class="btn-blue px-4 py-2 rounded-lg font-bold">Start Detection →</a>
+                <button class="text-blue-500 px-4 py-2 hover:underline">Learn More</button>
+            </div>
+        </div>
+
+        <!-- Image Section -->
+        <div class="w-full md:w-1/2">
+            <img src="{{ url_for('static', filename='images/db1.jpeg') }}" alt="Breast Cancer Detection" class="rounded-lg shadow-lg w-full">
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-auto">
+        <p>&copy; 2025 Breast Cancer AI. All rights reserved.</p>
+    </footer>
+</body>
+</html>
